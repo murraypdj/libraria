@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+    <script src="{% static 'script.js' %}"></script>
+    <title>Add Books</title>
+</head>
+<body>
+
+    <div class="banner">
+        <div class="logo-container">
+            <img src="{% static 'LMS.svg' %}" alt="Libraria Logo">
+        </div>
+        <h1>Libraria</h1>
+        <div class="dropdown">
+            <button class="dropbtn">≡</button>
+            <div class="dropdown-content" id="myDropdown">
+                <a href="/">Home</a>
+                <a href="/addapi">Add By ISBN</a>
+                <a href="/addp">Add Book</a>
+            </div>
+        </div>
+    </div>
+    
+    <h2>YAAY! Let's add a new book!</h2>
+    <div class="book-details">
+        <img id="book-cover" class="thumbnail" src="{% static 'image1.jpg' %}" alt="Book Cover">
+        <form class="book-details">
+            {% csrf_token %}
+            
+            <label for="isbn">ISBN:</label>
+            <input type="text" id="isbn" name="isbn" required>
+            
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" required>
+ 
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="location" required>
+            
+            <label for="quantity">Quantity:</label>
+            <input type="number" id="quantity" name="quantity" required>
+            
+            <label for="cover">Cover URL:</label>
+            <input type="text" id="cover" name="cover" required>
+            
+            <button type="button" onclick="addBook()">Add Book</button>
+        </form>
+    </div>
+
+    <footer>
+        <p>Made by Peter</p>
+    </footer>
+
+</body>
+</html>
