@@ -11,13 +11,6 @@ Libraria is a Django-based Library Management System (LMS) that allows users to 
 - View a list of all books in the library.
 - Responsive design for a seamless user experience.
 
-## Table of Contents
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-
 ## Installation
 
 1. Clone the repository:
