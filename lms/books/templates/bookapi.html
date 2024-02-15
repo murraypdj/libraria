@@ -1,117 +1,118 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
     <script src="{% static 'script.js' %}"></script>
-    <title>Add Books</title>
+    <title>本を追加</title>
 </head>
 <body>
 
     <div class="banner">
         <div class="logo-container">
-            <img src="{% static 'LMS.svg' %}" alt="Libraria Logo">
+            <a href="/">
+                <img src="{% static 'LMS.svg' %}" alt="Libraria ロゴ">
+            </a>
         </div>
-        <h1>Libraria</h1>
+        <h1>
+            <a href="/">Libraria</a>
+        </h1>
         <div class="dropdown">
             <button class="dropbtn">≡</button>
             <div class="dropdown-content" id="myDropdown">
-                <a href="/">Home</a>
-                <a href="/addapi">Add By ISBN</a>
-                <a href="/addp">Add Book</a>
+                <a href="/">ホーム</a>
+                <a href="/addapi">ISBN で追加</a>
+                <a href="/addp">本を追加</a>
             </div>
         </div>
     </div>
 
     
-    <h2>YAAY! Let's add a new book!</h2>
+    <h2>やったー！新しい本を追加しましょう！</h2>
     <div class="book-details">
         <img id="book-cover" class="thumbnail" src="{% static 'image1.jpg' %}" alt="Book Cover">
-        <p id="book-title">Search Away!</p>
+        <p id="book-title">検索してください！</p>
         <form class="add-book-form">
             {% csrf_token %}
             <label for="isbn">ISBN:</label>
             <input type="text" id="isbn" name="isbn" required>            
-            <button type="button" onclick="scrapeBook()">Add Book</button>
+            <button type="button" onclick="scrapeBook()">本を追加</button>
         </form>
-        <button id="save-to-library" style="display: none;" onclick="saveToLibrary()">Save to Library</button>
+        <button id="save-to-library" style="display: none;" onclick="saveToLibrary()">ライブラリに保存</button>
     </div>
     
     <script>
     function scrapeBook() {
-        // Get the ISBN from the input field
+        // 入力フィールドからISBNを取得
         var isbn = document.getElementById('isbn').value;
     
-        // Make a request to the Open Library Search API
+        // Open Library Search APIにリクエストを送信
         fetch(`https://openlibrary.org/search.json?q=${isbn}`)
             .then(response => response.json())
             .then(data => {
-                // Check if the book is found
+                // 本が見つかったか確認
                 if (data.num_found > 0) {
-                    // Update the book title
+                    // 本のタイトルを更新
                     var title = data.docs[0].title;
                     document.getElementById('book-title').innerText = title;
     
-                    // Update the book cover image
+                    // 本のカバー画像を更新
                     var coverUrl = `https://covers.openlibrary.org/b/id/${data.docs[0].cover_i}-L.jpg`;
                     document.getElementById('book-cover').src = coverUrl;
                     document.getElementById('save-to-library').style.display = 'inline';
                 } else {
-                    // Handle case where book is not found
-                    alert('Book not found!');
+                    // 本が見つからない場合の処理
+                    alert('本が見つかりませんでした！');
                 }
             })
             .catch(error => {
-                console.error('Error fetching data:', error);
+                console.error('データの取得エラー:', error);
             });
     }
 
     function saveToLibrary() {
-        // Get form page
-    const isbn = document.getElementById('isbn').value;
-    const title = document.getElementById('book-title').innerText;
-    const quantity = '1';
-    const cover = document.getElementById('book-cover').src;
-    const location = "TBD"
+        // フォームページを取得
+        const isbn = document.getElementById('isbn').value;
+        const title = document.getElementById('book-title').innerText;
+        const quantity = '1';
+        const cover = document.getElementById('book-cover').src;
+        const location = "未定"
 
-    // Create a JSON object with the form data
-    const bookData = {
-        isbn: isbn,
-        location: location,
-        title: title,
-        cover: cover,
-        quantity: quantity
-               
-    };
+        // フォームデータを含むJSONオブジェクトを作成
+        const bookData = {
+            isbn: isbn,
+            location: location,
+            title: title,
+            cover: cover,
+            quantity: quantity
+                   
+        };
 
-
-// Make a POST request to the server to add the book
-fetch('/add/', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-CSRFToken': getCookie('csrftoken')
-    },
-    body: JSON.stringify(bookData)
-})
-.then(response => {
-    if (response.ok) {
-        return response.json();
-    } else {
-        throw new Error('Failed to add book');
-    }
-})
-.then(data => {
-    console.log(data.message);  // Check the message in the console
-    alert(data.message);
-    window.location.href = "/book/" + isbn;
-})
-.catch(error => console.error(error));
-
-    
+        // サーバに本を追加するためのPOSTリクエストを作成
+        fetch('/add/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify(bookData)
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('本の追加に失敗しました');
+            }
+        })
+        .then(data => {
+            console.log(data.message);  // コンソールでメッセージを確認
+            alert(data.message);
+            window.location.href = "/book/" + isbn;
+        })
+        .catch(error => console.error(error));
     }   
     </script>
     

@@ -1,16 +1,17 @@
 {% load static %}
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
     <script src="{% static 'script.js' %}"></script>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
     <script>
-        // Call the function directly on the index page
+        // インデックスページで関数を直接呼び出す
         fetchAndDisplayBooks();
-      </script>
-    
+    </script>
 
     <title>LMS</title>
 </head>
@@ -19,7 +20,7 @@
     <div class="banner">
         <div class="logo-container">
             <a href="/">
-                <img src="{% static 'LMS.svg' %}" alt="Libraria Logo">
+                <img src="{% static 'LMS.svg' %}" alt="Libraria ロゴ">
             </a>
         </div>
         <h1>
@@ -28,29 +29,26 @@
         <div class="dropdown">
             <button class="dropbtn">≡</button>
             <div class="dropdown-content" id="myDropdown">
-                <a href="/">Home</a>
-                <a href="/scrapep">Add By ISBN</a>
-                <a href="/addp">Add Book</a>
+                <a href="/">ホーム</a>
+                <a href="/addapi">ISBN で追加</a>
+                <a href="/addp">本を追加</a>
             </div>
         </div>
     </div>
     
-    
     <table class="image-table">
         <tr>
             <td class="image" id="image1">
-                <p>Title 1</p>
-                <img src="{% static 'image1.jpg' %}" alt="Image 1">               
+                <p>タイトル 1</p>
+                <img src="{% static 'image1.jpg' %}" alt="画像 1">               
             </td>
-            <!-- Add more cells as needed -->
+            <!-- 必要に応じてセルを追加してください -->
         </tr>
     </table>
 
     <footer>
-        <p>Made by Peter</p>
+        <p>Peter 制作</p>
     </footer>
-
-    
     
 </body>
 </html>

@@ -1,58 +1,63 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
     <script src="{% static 'script.js' %}"></script>
-    <title>Add Books</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📚</text></svg>">
+    <title>本を追加</title>
 </head>
 <body>
 
     <div class="banner">
         <div class="logo-container">
-            <img src="{% static 'LMS.svg' %}" alt="Libraria Logo">
+            <a href="/">
+                <img src="{% static 'LMS.svg' %}" alt="Libraria ロゴ">
+            </a>
         </div>
-        <h1>Libraria</h1>
+        <h1>
+            <a href="/">Libraria</a>
+        </h1>
         <div class="dropdown">
             <button class="dropbtn">≡</button>
             <div class="dropdown-content" id="myDropdown">
-                <a href="/">Home</a>
-                <a href="/addapi">Add By ISBN</a>
-                <a href="/addp">Add Book</a>
+                <a href="/">ホーム</a>
+                <a href="/addapi">ISBN で追加</a>
+                <a href="/addp">本を追加</a>
             </div>
         </div>
     </div>
     
-    <h2>YAAY! Let's add a new book!</h2>
+    <h2>やったー！新しい本を追加しましょう！</h2>
     <div class="book-details">
-        <img id="book-cover" class="thumbnail" src="{% static 'image1.jpg' %}" alt="Book Cover">
+        <img id="book-cover" class="thumbnail" src="{% static 'image1.jpg' %}" alt="本の表紙">
         <form class="book-details">
             {% csrf_token %}
             
             <label for="isbn">ISBN:</label>
             <input type="text" id="isbn" name="isbn" required>
             
-            <label for="title">Title:</label>
+            <label for="title">タイトル:</label>
             <input type="text" id="title" name="title" required>
  
-            <label for="location">Location:</label>
+            <label for="location">場所:</label>
             <input type="text" id="location" name="location" required>
             
-            <label for="quantity">Quantity:</label>
+            <label for="quantity">数量:</label>
             <input type="number" id="quantity" name="quantity" required>
             
-            <label for="cover">Cover URL:</label>
+            <label for="cover">表紙のURL:</label>
             <input type="text" id="cover" name="cover" required>
             
-            <button type="button" onclick="addBook()">Add Book</button>
+            <button type="button" onclick="addBook()">本を追加</button>
         </form>
     </div>
 
     <footer>
-        <p>Made by Peter</p>
+        <p>Peter 制作</p>
     </footer>
 
 </body>
