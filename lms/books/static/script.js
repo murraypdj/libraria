@@ -2,7 +2,7 @@
 async function fetchAndDisplayBooks() {
     try {
         // Fetch book data from Django backend
-        const response = await fetch('http://127.0.0.1:8000/all/');
+        const response = await fetch('/all/');
         const books = await response.json();
 
         // Display books on the index page
